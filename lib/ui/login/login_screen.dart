@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:training_flutter/theme/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:training_flutter/theme/strings.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,81 +20,85 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (child) {
         return Scaffold(
           appBar: AppBar(
-            toolbarHeight: 90,
+            toolbarHeight: ScreenUtil().setSp(90),
             centerTitle: true,
-            backgroundColor: AppColors().yellow,
+            backgroundColor: AppColors.yellow,
             elevation: 0,
             flexibleSpace: Container(
-              margin: const EdgeInsets.only(top: 32.0),
+              margin: EdgeInsets.only(top: ScreenUtil().setSp(32)),
               child: Column(
                 children: [
                   Image.asset('assets/icons/ic_splash.png',
-                      fit: BoxFit.cover, height: 50.0),
+                      fit: BoxFit.cover, height: ScreenUtil().setSp(50)),
                   Container(
-                      margin: const EdgeInsets.only(top: 4.0),
-                      child: Text('Login',
+                      margin: EdgeInsets.only(top: ScreenUtil().setSp(4)),
+                      child: Text(AppStrings.login,
                           style: TextStyle(
-                              color: AppColors().black, fontSize: 20))),
+                              color: AppColors.black,
+                              fontSize: ScreenUtil().setSp(20)))),
                 ],
               ),
             ),
           ),
           body: Container(
-            margin: const EdgeInsets.only(left: 16.0, right: 16.0),
+            margin: EdgeInsets.only(
+                left: ScreenUtil().setSp(16), right: ScreenUtil().setSp(16)),
             child: Column(
               children: [
-                buildFieldInputUsername(),
-                buildFieldInputPassword(),
-                buildTextForgotPass(),
-                buildButtonLogin(),
-                buildTextLoginExternal(),
-                buildButtonLoginFacebook(),
+                _buildFieldInput(true),
+                _buildFieldInput(false),
+                _buildTextUnderline(false),
+                _buildButtonLogin(),
+                _buildTextLoginExternal(),
+                _buildButtonLoginExternal(
+                    'assets/icons/ic_facebook.png', AppStrings.facebook),
+                _buildButtonLoginExternal(
+                    'assets/icons/ic_google.png', AppStrings.google),
+                _buildButtonLoginExternal(
+                    'assets/icons/ic_apple.png', AppStrings.apple),
+                _buildTextUnderline(true)
               ],
             ),
           ),
+          bottomNavigationBar: _buildBottomNavigation(),
         );
       },
     );
   }
 }
 
-buildFieldInputUsername() {
+_buildFieldInput(bool isUsername) {
   return Container(
-    margin: const EdgeInsets.only(top: 24.0),
-    child: const TextField(
-      decoration: InputDecoration(
-        hintText: 'Username',
-      ),
-    ),
+    margin: EdgeInsets.only(top: ScreenUtil().setSp(24)),
+    child: isUsername
+        ? const TextField(
+            decoration: InputDecoration(
+              hintText: AppStrings.userName,
+            ),
+          )
+        : TextField(
+            scrollPadding: EdgeInsets.all(ScreenUtil().setSp(12)),
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+            decoration: const InputDecoration(
+              suffixIcon: Icon(Icons.remove_red_eye),
+              hintText: AppStrings.password,
+            ),
+          ),
   );
 }
 
-buildFieldInputPassword() {
+_buildTextUnderline(bool isCenter) {
   return Container(
-    margin: const EdgeInsets.only(top: 24.0),
-    child: const TextField(
-      scrollPadding: EdgeInsets.all(12.0),
-      obscureText: true,
-      enableSuggestions: false,
-      autocorrect: false,
-      decoration: InputDecoration(
-        suffixIcon: Icon(Icons.remove_red_eye),
-        hintText: 'Password',
-      ),
-    ),
-  );
-}
-
-buildTextForgotPass() {
-  return Container(
-    margin: const EdgeInsets.only(top: 16.0),
+    margin: EdgeInsets.only(top: ScreenUtil().setSp(16)),
     child: Align(
-      alignment: Alignment.centerRight,
+      alignment: isCenter ? Alignment.center : Alignment.centerRight,
       child: Text(
-        'Click here if you forget your password',
+        isCenter ? AppStrings.register : AppStrings.forgetPassword,
         style: TextStyle(
-          color: AppColors().blue,
-          fontSize: 12.0,
+          color: isCenter ? AppColors.black : AppColors.blue,
+          fontSize: isCenter ? ScreenUtil().setSp(18) : ScreenUtil().setSp(16),
           decoration: TextDecoration.underline,
         ),
       ),
@@ -101,60 +106,89 @@ buildTextForgotPass() {
   );
 }
 
-buildButtonLogin() {
+_buildButtonLogin() {
   return Container(
-    margin: const EdgeInsets.only(top: 16.0),
+    margin: EdgeInsets.only(top: ScreenUtil().setSp(16)),
     child: ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        primary: AppColors().grey,
-        minimumSize: const Size.fromHeight(40),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero
-        ),
-        elevation: 0
-      ),
-      child: Text('Login', style: TextStyle(color: AppColors().black)),
+          primary: AppColors.grey,
+          minimumSize: Size.fromHeight(ScreenUtil().setSp(40)),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          elevation: 0),
+      child: const Text(AppStrings.login,
+          style: TextStyle(color: AppColors.black)),
     ),
   );
 }
 
-buildTextLoginExternal() {
+_buildTextLoginExternal() {
   return Container(
-    margin: const EdgeInsets.only(top: 32.0),
+      margin: EdgeInsets.only(top: ScreenUtil().setSp(32)),
       child: Text(
-      'Log in with an external account',
-    style: TextStyle(
-      color: AppColors().grey,
-      fontSize: 16
-    ),
-  ));
+        AppStrings.externalAccount,
+        style:
+            TextStyle(color: AppColors.grey, fontSize: ScreenUtil().setSp(16)),
+      ));
 }
 
-buildButtonLoginFacebook() {
+_buildButtonLoginExternal(String urlImage, String textLogin) {
   return Container(
-    margin: const EdgeInsets.only(top: 16.0),
+    margin: EdgeInsets.only(top: ScreenUtil().setSp(16)),
     child: ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
           primary: Colors.transparent,
-          minimumSize: const Size.fromHeight(40),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero
-          ),
+          minimumSize: Size.fromHeight(ScreenUtil().setSp(40)),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           elevation: 0,
-        side: BorderSide(
-          width: 2.0,
-          color: AppColors().grey
-        )
-      ),
-      child: Row(
+          side:
+              BorderSide(width: ScreenUtil().setSp(2), color: AppColors.grey)),
+      child: Stack(
         children: [
-          Image.asset('assets/icons/ic_facebook.png',
-              fit: BoxFit.cover, height: 2.0, width: 2.0,),
-          Text('facebook', style: TextStyle(color: AppColors().black))
+          Container(
+            margin: EdgeInsets.only(left: ScreenUtil().setSp(48)),
+            child: Image.asset(urlImage, fit: BoxFit.cover),
+          ),
+          Container(
+              alignment: Alignment.center,
+              child: Container(
+                margin: EdgeInsets.only(top: ScreenUtil().setSp(4)),
+                child: Text(textLogin,
+                    style: const TextStyle(color: AppColors.black),
+                    textAlign: TextAlign.center),
+              ))
         ],
       ),
+    ),
+  );
+}
+
+_buildBottomNavigation() {
+  return Container(
+    color: AppColors.yellow,
+    padding: EdgeInsets.all(ScreenUtil().setSp(16)),
+    child: Row(
+      children: [
+        Container(
+            margin: EdgeInsets.only(right: ScreenUtil().setSp(8)),
+            child: Text(
+              'data1',
+              style: TextStyle(fontSize: ScreenUtil().setSp(16)),
+            )),
+        Container(
+            margin: EdgeInsets.only(left: ScreenUtil().setSp(0)),
+            child: Text('data2',
+                style: TextStyle(fontSize: ScreenUtil().setSp(16)))),
+        Container(
+            margin: EdgeInsets.only(left: ScreenUtil().setSp(8)),
+            child: Text('data3',
+                style: TextStyle(fontSize: ScreenUtil().setSp(16)))),
+        Container(
+            margin: EdgeInsets.only(left: ScreenUtil().setSp(8)),
+            child: Text('data4',
+                style: TextStyle(fontSize: ScreenUtil().setSp(16)))),
+      ],
     ),
   );
 }
