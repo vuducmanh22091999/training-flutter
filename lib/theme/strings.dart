@@ -8,4 +8,5 @@ class AppStrings {
   static const String google = 'google';
   static const String apple = 'apple';
   static const String register = 'Register from here';
+  static const String topNotification = 'Top Notification Top NotificationTop NotificationTop NotificationTop Notification';
 }

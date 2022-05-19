@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:training_flutter/theme/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:training_flutter/theme/strings.dart';
+import 'package:get/get.dart';
+import 'package:training_flutter/ui/home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -110,7 +112,10 @@ _buildButtonLogin() {
   return Container(
     margin: EdgeInsets.only(top: ScreenUtil().setSp(16)),
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        // Get.offAll(const HomeScreen());
+        Get.to(const HomeScreen());
+      },
       style: ElevatedButton.styleFrom(
           primary: AppColors.grey,
           minimumSize: Size.fromHeight(ScreenUtil().setSp(40)),
