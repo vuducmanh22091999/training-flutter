@@ -9,4 +9,8 @@ class AppStrings {
   static const String apple = 'apple';
   static const String register = 'Register from here';
   static const String topNotification = 'Top Notification Top NotificationTop NotificationTop NotificationTop Notification';
+  static const String payment = '自己負担額（累計）';
+  static const String yearOld = '34歳（2028年）の場合';
+  static const String value = '34';
+  static const String kYen = '万円';
 }
